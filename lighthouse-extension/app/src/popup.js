@@ -141,7 +141,20 @@ document.addEventListener('DOMContentLoaded', _ => {
           ' Close the other tabs to use lighthouse.';
       }
 
+      const reportErrorEl = document.createElement('a');
+      reportErrorEl.className = 'button button--report-error';
+
+      const base = 'https://github.com/googlechrome/lighthouse/issues/new?';
+      const title = 'title=Lighthouse%20Extension%20Error';
+      const body = '&body=Error:%20' + message;
+
+      reportErrorEl.href = base + title + body;
+      reportErrorEl.text = 'Report Error';
+      reportErrorEl.target = '_blank';
+
       feedbackEl.textContent = message;
+      feedbackEl.appendChild(reportErrorEl);
+
       stopSpinner();
       background.console.error(err);
     });
