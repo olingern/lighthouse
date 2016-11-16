@@ -132,28 +132,34 @@ document.addEventListener('DOMContentLoaded', _ => {
     })
     .catch(err => {
       let message = err.message;
-      if (message.toLowerCase().startsWith('another debugger')) {
+
+      const debuggerExists = message.toLowerCase().startsWith('another debugger');
+      const multipleTabs = message.toLowerCase().includes('multiple tabs');
+
+      if (debuggerExists) {
         message = 'You probably have DevTools open.' +
           ' Close DevTools to use lighthouse';
       }
-      if (message.toLowerCase().includes('multiple tabs')) {
+      if (multipleTabs) {
         message = 'You probably have multiple tabs open to the same origin.' +
           ' Close the other tabs to use lighthouse.';
       }
 
-      const reportErrorEl = document.createElement('a');
-      reportErrorEl.className = 'button button--report-error';
-
-      const base = 'https://github.com/googlechrome/lighthouse/issues/new?';
-      const title = 'title=Lighthouse%20Extension%20Error';
-      const body = '&body=Error:%20' + message;
-
-      reportErrorEl.href = base + title + body;
-      reportErrorEl.text = 'Report Error';
-      reportErrorEl.target = '_blank';
-
       feedbackEl.textContent = message;
-      feedbackEl.appendChild(reportErrorEl);
+
+      if (!multipleTabs && !debuggerExists) {
+        const reportErrorEl = document.createElement('a');
+        reportErrorEl.className = 'button button--report-error';
+
+        const base = 'https://github.com/googlechrome/lighthouse/issues/new?';
+        const title = 'title=Lighthouse%20Extension%20Error';
+        const body = '&body=Error:%20' + message;
+
+        reportErrorEl.href = base + title + body;
+        reportErrorEl.textContent = 'Report Error';
+        reportErrorEl.target = '_blank';
+        feedbackEl.appendChild(reportErrorEl);
+      }
 
       stopSpinner();
       background.console.error(err);
