@@ -37,6 +37,32 @@ document.addEventListener('DOMContentLoaded', _ => {
   const optionsList = document.body.querySelector('.options__list');
   const okButton = document.getElementById('ok');
 
+  function getLightHouseVersion() {
+    return chrome.runtime.getManifest().version;
+  }
+
+  function getChromeVersion() {
+    return /Chrome\/([0-9.]+)/.exec(navigator.userAgent)[1];
+  }
+
+  function buildReportErrorLink(err) {
+    const reportErrorEl = document.createElement('a');
+    reportErrorEl.className = 'button button--report-error';
+
+    let qsBody = '**Lighthouse Version**: ' + getLightHouseVersion() + '\n';
+    qsBody += '**Chrome Version**: ' + getChromeVersion() + '\n';
+    qsBody += '**Stack Trace**:\n' + err.stack;
+
+    const base = 'https://github.com/googlechrome/lighthouse/issues/new?';
+    const title = encodeURI('title=Lighthouse Extension Error');
+    const body = '&body=' + encodeURI(qsBody);
+
+    reportErrorEl.href = base + title + body;
+    reportErrorEl.textContent = 'Report Error';
+    reportErrorEl.target = '_blank';
+    return reportErrorEl;
+  }
+
   let spinnerAnimation;
 
   function startSpinner() {
@@ -148,17 +174,8 @@ document.addEventListener('DOMContentLoaded', _ => {
       feedbackEl.textContent = message;
 
       if (!multipleTabs && !debuggerExists) {
-        const reportErrorEl = document.createElement('a');
-        reportErrorEl.className = 'button button--report-error';
-
-        const base = 'https://github.com/googlechrome/lighthouse/issues/new?';
-        const title = 'title=Lighthouse%20Extension%20Error';
-        const body = '&body=Error:%20' + message;
-
-        reportErrorEl.href = base + title + body;
-        reportErrorEl.textContent = 'Report Error';
-        reportErrorEl.target = '_blank';
-        feedbackEl.appendChild(reportErrorEl);
+        feedbackEl.className = 'feedback-error';
+        feedbackEl.appendChild(buildReportErrorLink(err));
       }
 
       stopSpinner();
