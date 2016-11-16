@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', _ => {
   const optionsList = document.body.querySelector('.options__list');
   const okButton = document.getElementById('ok');
 
-  function getLightHouseVersion() {
+  function getLighthouseVersion() {
     return chrome.runtime.getManifest().version;
   }
 
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', _ => {
     const reportErrorEl = document.createElement('a');
     reportErrorEl.className = 'button button--report-error';
 
-    let qsBody = '**Lighthouse Version**: ' + getLightHouseVersion() + '\n';
+    let qsBody = '**Lighthouse Version**: ' + getLighthouseVersion() + '\n';
     qsBody += '**Chrome Version**: ' + getChromeVersion() + '\n';
     qsBody += '**Error Message**: ' + err.message + '\n';
     qsBody += '**Stack Trace**:\n ```' + err.stack + '```';
