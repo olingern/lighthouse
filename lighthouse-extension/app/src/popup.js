@@ -51,7 +51,8 @@ document.addEventListener('DOMContentLoaded', _ => {
 
     let qsBody = '**Lighthouse Version**: ' + getLightHouseVersion() + '\n';
     qsBody += '**Chrome Version**: ' + getChromeVersion() + '\n';
-    qsBody += '**Stack Trace**:\n' + err.stack;
+    qsBody += '**Error Message**: ' + err.message + '\n';
+    qsBody += '**Stack Trace**:\n ```' + err.stack + '```';
 
     const base = 'https://github.com/googlechrome/lighthouse/issues/new?';
     const title = encodeURI('title=Lighthouse Extension Error');
