@@ -15,8 +15,8 @@ cache:
 install:
   - if [[ $(node -v) =~ ^v4.* ]]; then npm install; fi
   - if [[ $(node -v) =~ ^v5.* ]]; then npm install; fi
-  - if [[ $(node -v) =~ ^v6.* ]]; then yarn install; fi
-  - if [[ $(node -v) =~ ^v7.* ]]; then yarn install; fi
+  - if [[ $(node -v) =~ ^v6.* ]]; then npm install yarn -g && yarn install; fi
+  - if [[ $(node -v) =~ ^v7.* ]]; then npm install yarn -g && yarn install; fi
 before_script:
   - npm i -g typescript@2.0
   - npm --prefix ./lighthouse-extension install ./lighthouse-extension
