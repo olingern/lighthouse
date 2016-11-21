@@ -56,8 +56,8 @@ document.addEventListener('DOMContentLoaded', _ => {
 
     const base = 'https://github.com/googlechrome/lighthouse/issues/new?';
     let titleError = err.message;
-    if (titleError.length > MAX_ISSUE_ERROR_LENGTH) {
-      titleError = err.message.substring(0, MAX_ISSUE_ERROR_LENGTH - 3) + '...';
+    if (titleError.length > MAX_ISSUE_ERROR_LENGTH) {;
+      titleError = `${titleError.substring(0, MAX_ISSUE_ERROR_LENGTH - 3)}...`;
     }
     const title = encodeURI('title=Extension Error: ' + titleError);
     const body = '&body=' + encodeURI(qsBody);
