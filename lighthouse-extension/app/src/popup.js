@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', _ => {
     qsBody += '**Stack Trace**:\n ```' + err.stack + '```';
 
     const base = 'https://github.com/googlechrome/lighthouse/issues/new?';
-    const title = encodeURI('title=Lighthouse Extension Error');
+    const title = encodeURI('title=Extension Error: ' + err.message);
     const body = '&body=' + encodeURI(qsBody);
 
     reportErrorEl.href = base + title + body;
