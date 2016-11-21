@@ -37,4 +37,3 @@ script:
   - cd ..
 after_success:
   - npm run coveralls
-
